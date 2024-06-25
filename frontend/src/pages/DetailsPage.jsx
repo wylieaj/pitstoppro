@@ -19,9 +19,9 @@ export const loader = async (params) => {
   // CHECK IF RENDER HOSTING IS LIVE OR NOT
   try {
     const isRenderOnline = await fetch(
-      "https://pit-stop-pro.onrender.com/getFuelStations"
+      "https://pitstoppro.onrender.com/getFuelStations"
     );
-    url = "https://pit-stop-pro.onrender.com";
+    url = "https://pitstoppro.onrender.com";
   } catch (error) {
     url = "http://localhost:8080";
   }
