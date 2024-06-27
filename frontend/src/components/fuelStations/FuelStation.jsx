@@ -60,7 +60,7 @@ const FuelStation = ({ fuelStation, fuelToggle }) => {
           </p>
           <div className="">
             <p className="text-right font-bold">
-              {spotlight.length > 0 ? spotlight[0].price : "Unavailabe"}
+              {spotlight.length > 0 ? `${spotlight[0].price}p` : "Unavailabe"}
             </p>
           </div>
         </div>
