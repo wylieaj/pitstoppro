@@ -31,7 +31,7 @@ const FuelStationDetail = ({ data }) => {
                 txColour = "text-unleaded";
 
                 break;
-              case "Super Unleaded":
+              case "S.Unleaded":
                 bgColour = "bg-superUnleaded";
                 txColour = "text-superUnleaded";
 
@@ -41,7 +41,7 @@ const FuelStationDetail = ({ data }) => {
                 txColour = "text-diesel";
 
                 break;
-              case "Super Diesel":
+              case "S.Diesel":
                 bgColour = "bg-superDiesel";
                 txColour = "text-superDiesel";
 

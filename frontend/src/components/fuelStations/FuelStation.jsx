@@ -1,16 +1,34 @@
 import { priceFormatter } from "../../util/priceFromatter";
 import { Link } from "react-router-dom";
 
-const FuelStation = ({ fuelStation }) => {
+const FuelStation = ({ fuelStation, fuelToggle }) => {
   const brandName = fuelStation.brand.toLowerCase();
   const fuelArr = priceFormatter(fuelStation.prices);
 
-  const lowest = fuelArr.reduce((prev, curr) =>
-    prev.price < curr.price ? prev : curr
-  );
+  const spotlight = fuelArr.filter((el) => el.code === fuelToggle);
+  let spotlightBg = "";
+  if (spotlight.length > 0) {
+    switch (spotlight[0].code) {
+      case "E10":
+        spotlightBg = "bg-unleaded";
+        break;
+      case "E5":
+        spotlightBg = "bg-superUnleaded";
+        break;
+      case "B7":
+        spotlightBg = "bg-diesel";
+        break;
+      case "SDV":
+        spotlightBg = "bg-superDiesel";
+        break;
+      default:
+        break;
+    }
+  } else {
+    spotlightBg = "bg-primary";
+  }
 
   let isCapitalized = "capitalize";
-
   if (brandName === "bp") {
     isCapitalized = "uppercase";
   }
@@ -26,18 +44,24 @@ const FuelStation = ({ fuelStation }) => {
           </h2>
           <div className="">
             <p className="text-primaryDarken">{fuelStation.postcode}</p>
-            <p className="text-sm line-clamp-1 text-primaryDarken">
+            <p className="text-sm overflow-hidden truncate w-44 text-primaryDarken">
               {fuelStation.address}
             </p>
           </div>
         </div>
 
         <div
-          className={`bg-green-600 text-bgDark text-sm h-full flex flex-col justify-between px-2 py-4 rounded-r-xl`}
+          className={`${spotlightBg} text-right w-28 ${
+            spotlightBg === "bg-diesel" ? "text-primary" : "text-bgDarkSub"
+          } text-sm h-full flex flex-col justify-between px-2 py-4 rounded-r-xl`}
         >
-          <p className="font-bold text-base">{lowest.type}</p>
+          <p className="font-bold text-base">
+            {spotlight.length > 0 ? spotlight[0].type : "Unavailable"}
+          </p>
           <div className="">
-            <p className="text-right font-bold">{lowest.price}p</p>
+            <p className="text-right font-bold">
+              {spotlight.length > 0 ? spotlight[0].price : "Unavailabe"}
+            </p>
           </div>
         </div>
       </div>

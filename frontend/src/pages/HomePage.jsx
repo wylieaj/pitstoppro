@@ -8,6 +8,7 @@ import FuelStationList from "../components/fuelStations/FuelStationList";
 const HomePage = () => {
   const [fuelStations, setFuelStations] = useState([]);
   const [isInvalid, setIsInvalid] = useState();
+  const [fuelToggle, setFuelToggle] = useState("E10");
   const data = useLoaderData();
 
   const savedPostcode = sessionStorage.getItem("postcode");
@@ -18,10 +19,14 @@ const HomePage = () => {
     }
   }, []);
 
+  const handleFuelToggle = (evt) => {
+    setFuelToggle(evt.target.value);
+  };
+
   const getFuelStations = async (postcode) => {
     if (postcode === "") {
       setFuelStations([]);
-      setIsInvalid("Postcode field left empty");
+      setIsInvalid("Postcode field is empty");
       return;
     }
 
@@ -36,6 +41,7 @@ const HomePage = () => {
       sessionStorage.setItem("postcode", postcode);
       setFuelStations(sortedStations);
     } catch (error) {
+      setFuelStations([]);
       setIsInvalid("Invalid Postcode");
     }
   };
@@ -58,15 +64,32 @@ const HomePage = () => {
         </div>
       ) : (
         <div className="flex flex-col gap-2 transition-all">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <p className="text-xl font-semibold text-primary">
               Nearby Locations
             </p>
-            <p className="text-xl font-semibold text-primary">Cheapest Fuel</p>
+            <p className=" font-semibold text-primary">
+              <select
+                name=""
+                id=""
+                className="bg-bgDarkSub"
+                onChange={handleFuelToggle}
+              >
+                <option value="E10" defaultChecked>
+                  Unleaded
+                </option>
+                <option value="E5">Super Unleaded</option>
+                <option value="B7">Diesel</option>
+                <option value="SDV">Super Diesel</option>
+              </select>
+            </p>
           </div>
 
           <div>
-            <FuelStationList fuelStations={fuelStations} />
+            <FuelStationList
+              fuelStations={fuelStations}
+              fuelToggle={fuelToggle}
+            />
           </div>
         </div>
       )}
@@ -84,6 +107,7 @@ export const loader = async () => {
     const isRenderOnline = await fetch(
       "https://pitstoppro.onrender.com/getFuelStations"
     );
+    console.log(isRenderOnline);
     url = "https://pitstoppro.onrender.com";
   } catch (error) {
     url = "http://localhost:8080";

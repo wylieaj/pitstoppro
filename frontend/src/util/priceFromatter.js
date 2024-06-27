@@ -7,7 +7,7 @@ export const priceFormatter = (pricesObj) => {
 
     switch (key) {
       case "E5":
-        type = "Super Unleaded";
+        type = "S.Unleaded";
         break;
       case "E10":
         type = "Unleaded";
@@ -16,14 +16,14 @@ export const priceFormatter = (pricesObj) => {
         type = "Diesel";
         break;
       case "SDV":
-        type = "Super Diesel";
+        type = "S.Diesel";
         break;
 
       default:
         break;
     }
 
-    prices = [...prices, { type, price }];
+    prices = [...prices, { type, price, code: key }];
   });
 
   return prices;
