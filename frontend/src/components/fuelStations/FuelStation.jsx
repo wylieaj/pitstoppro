@@ -5,6 +5,7 @@ const FuelStation = ({ fuelStation, fuelToggle }) => {
   const brandName = fuelStation.brand.toLowerCase();
   const fuelArr = priceFormatter(fuelStation.prices);
 
+  // LOGIC FOR SETTING THE SPOTLIGHT FUEL AND BG COLOUR
   const spotlight = fuelArr.filter((el) => el.code === fuelToggle);
   let spotlightBg = "";
   if (spotlight.length > 0) {
@@ -28,6 +29,7 @@ const FuelStation = ({ fuelStation, fuelToggle }) => {
     spotlightBg = "bg-primary";
   }
 
+  // LOGIC FOR BRAND NAME TEXT FORMAT
   let isCapitalized = "capitalize";
   if (brandName === "bp") {
     isCapitalized = "uppercase";

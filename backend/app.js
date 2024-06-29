@@ -35,8 +35,15 @@ app.get("/getFuelStations", async (req, res) => {
     dbBrands.map(async (brand) => {
       const brandURL = brand.url;
       const response = await fetch(`${brandURL}`);
-      const resData = await response.json();
-      return resData;
+
+      if (response.status !== 200) {
+        console.log(brand.comapny + " RESPONSE NOT 200");
+        return;
+      } else {
+        console.log(brand.comapny + " RESPONSE 200");
+        const resData = await response.json();
+        return resData;
+      }
     })
   );
 
