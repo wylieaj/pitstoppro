@@ -34,6 +34,7 @@ app.get("/getFuelStations", async (req, res) => {
   dbData = await Promise.all(
     dbBrands.map(async (brand) => {
       const brandURL = brand.url;
+      console.log(brand.company);
       const response = await fetch(`${brandURL}`);
 
       if (response.status !== 200) {
@@ -51,7 +52,12 @@ app.get("/getFuelStations", async (req, res) => {
 
   if (type === "ungrouped") {
     let extractedData = [];
+    console.log("UNGROUPED STATEMENT");
     dbData.map((brand) => {
+      brand === undefined ? console.log("NULL") : console.log(brand);
+      if (brand === undefined) {
+        return;
+      }
       brand.stations.map((station) => {
         const stationObj = { updated: brand.last_updated, ...station };
         extractedData = [...extractedData, stationObj];
